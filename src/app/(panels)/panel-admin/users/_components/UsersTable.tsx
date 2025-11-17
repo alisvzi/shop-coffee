@@ -1,27 +1,26 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button/button";
-import { ObjectId } from "mongoose";
 import { Table } from "../../../_components/Table/Table";
 import { useBanUser } from "../_api/useBanUser";
 import { useChangeUserRole } from "../_api/useChangeUserRole";
 import { useDeleteUser } from "../_api/useDeleteUser";
 
-interface UserT {
-  _id: ObjectId;
+type UserRow = {
+  _id: string;
   name: string;
   email: string;
   phone: string;
   role: string;
-}
+};
 
-export default function UsersTable({ users }: UserT[]) {
+export default function UsersTable({ users }: { users: UserRow[] }) {
   const { changeRole } = useChangeUserRole();
   const { deleteUser } = useDeleteUser();
   const { banUser } = useBanUser();
 
   return (
-    <Table<UserT>
+    <Table<UserRow>
       columns={[
         {
           key: "name",
@@ -30,12 +29,12 @@ export default function UsersTable({ users }: UserT[]) {
         {
           key: "email",
           header: "ایمیل",
-          render: (value) => (!value ? "ایمیل یافت نشد" : value),
+          render: (value) => (!value ? "ایمیل یافت نشد" : String(value)),
         },
         {
           key: "role",
           header: "نقش",
-          render: (value) => (value === "ADMIN" ? "مدیر" : "کاربر"),
+          render: (value) => (String(value) === "ADMIN" ? "مدیر" : "کاربر"),
         },
       ]}
       data={users}

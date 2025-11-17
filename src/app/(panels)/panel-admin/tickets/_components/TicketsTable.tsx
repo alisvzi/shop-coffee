@@ -2,20 +2,20 @@
 
 import { Button } from "@/app/_components/ui/button/button";
 import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
-import { ObjectId } from "mongoose";
 import { Table } from "../../../_components/Table/Table";
 
-interface ticketsT {
-  _id: ObjectId;
-  user: { _id: ObjectId };
+type TicketRow = {
+  _id: string;
+  user: { _id?: string; name: string } | null;
   title: string;
   phone: string;
-  department: string;
-}
+  department: { title: string } | string;
+  body: string;
+};
 
-export default function TicketsTable({ tickets }: ticketsT[]) {
+export default function TicketsTable({ tickets }: { tickets: TicketRow[] }) {
   const { confirm } = useDialog();
-  const showBody = async (bodyText) => {
+  const showBody = async (bodyText: string) => {
     await confirm({
       title: "متن تیکت",
       description: bodyText,
@@ -23,7 +23,7 @@ export default function TicketsTable({ tickets }: ticketsT[]) {
       isQuestion: false,
     });
   };
-  const sendAnswer = async (ticket) => {
+  const sendAnswer = async (ticket: TicketRow) => {
     const result = await confirm({
       title: "متن پاسخ",
       description: "پاسخ به تیکت را وارد کنید",
@@ -32,7 +32,7 @@ export default function TicketsTable({ tickets }: ticketsT[]) {
       confirmText: "ثبت پاسخ",
     });
 
-    if (result === false || result.trim(" ") === "") {
+    if (typeof result !== "string" || result.trim() === "") {
       console.log("کاربر لغو کرد");
     } else {
       const res = await fetch("/api/tickets/answer", {
@@ -48,12 +48,12 @@ export default function TicketsTable({ tickets }: ticketsT[]) {
     }
   };
   return (
-    <Table<ticketsT>
+    <Table<TicketRow>
       columns={[
         {
           key: "user",
           header: "نام و نام خانوادگی",
-          render: (value) => value.name,
+          render: (value) => (value as { name: string } | null)?.name,
         },
         {
           key: "title",
@@ -62,7 +62,10 @@ export default function TicketsTable({ tickets }: ticketsT[]) {
         {
           key: "department",
           header: "دپارتمان",
-          render: (value) => value.title,
+          render: (value) =>
+            typeof value === "string"
+              ? value
+              : (value as { title: string })?.title,
         },
       ]}
       data={tickets}

@@ -1,4 +1,6 @@
-const MoreInfo = ({ product }) => {
+import type { IProduct } from "@/types/product.interface";
+
+const MoreInfo = ({ product }: { product: IProduct }) => {
   return (
     <div>
       <p>اطلاعات بیشتر :</p>

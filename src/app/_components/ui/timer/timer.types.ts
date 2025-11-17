@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { ComponentBase } from "../types/component-base.type";
-import { Variant } from "../types/variant.type";
+import { ComponentBase } from "../../types/component-base.type";
+import { Variant } from "../../types/variant.type";
 
 export type TimerRef = {
     start: () => void;

@@ -21,10 +21,11 @@ const Wishlist = async () => {
   let wishes: WishItem[] = [];
   const user = await authUser();
   if (user) {
-    wishes = await wishlistModel
+    const raw = await wishlistModel
       .find({ user: user._id }, "-__v")
       .populate("product", "name price score")
       .lean();
+    wishes = JSON.parse(JSON.stringify(raw)) as WishItem[];
   }
   return (
     <>
@@ -68,13 +69,12 @@ const Wishlist = async () => {
                     productID={String(item.product._id)}
                     name={item.product.name}
                     price={item.product.price}
-                    key={item._id}
+                    key={String(item._id)}
                   />
                 ))}
               </div>
             </div>
 
-            {/* خلاصه و اقدامات */}
             <div className="mt-8 bg-white shadow-sm rounded-lg p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>

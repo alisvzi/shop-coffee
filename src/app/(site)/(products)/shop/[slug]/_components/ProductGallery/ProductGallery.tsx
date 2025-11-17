@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
+import type { CSSProperties } from "react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const ProductGallery = () => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const images = [
     "https://set-coffee.com/wp-content/uploads/2020/12/Gold-DG-700x700.jpg",
     "https://set-coffee.com/wp-content/uploads/2020/12/Gold-box-DG--150x150.jpg",
@@ -20,7 +22,7 @@ const ProductGallery = () => {
         style={{
           "--swiper-navigation-color": "#fff",
           "--swiper-pagination-color": "#fff",
-        }}
+        } as CSSProperties}
         spaceBetween={10}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
@@ -35,7 +37,7 @@ const ProductGallery = () => {
       </Swiper>
 
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={(swiper) => setThumbsSwiper(swiper)}
         spaceBetween={10}
         slidesPerView={4}
         freeMode={true}

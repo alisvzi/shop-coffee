@@ -2,7 +2,7 @@
 import { Notification, NotificationType } from "@/types/notification.interface";
 import { ReactNode, useEffect, useState } from "react";
 import { Progress } from "../progress/progress";
-import { IconCheck, IconClose, IconError, IconInfo } from "../icons/icons";
+import { IconCheck, IconClose, IconError, IconInfo } from "@/app/_components/icons/icons";
 import { NotificationToastProps } from "./notification.types";
 import { useNotificationStore } from "@/stores/notification.store";
 

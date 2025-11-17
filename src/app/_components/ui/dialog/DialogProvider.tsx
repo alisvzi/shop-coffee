@@ -17,7 +17,7 @@ interface DialogOptions {
 }
 
 interface DialogContextValue {
-  confirm: (options: DialogOptions) => Promise<boolean>;
+  confirm: (options: DialogOptions) => Promise<boolean | string>;
 }
 
 const DialogContext = createContext<DialogContextValue | null>(null);

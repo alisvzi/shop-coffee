@@ -1,11 +1,15 @@
 import { IconCheck } from "@/app/_components/icons/icons";
 import { Price } from "@/app/_components/ui/price";
 import { Rating } from "@/app/_components/ui/rating";
-import { IProduct } from "@/types/product.interface";
+import type { IProduct } from "@/types/product.interface";
+import type { IComment } from "@/types/comment.interface";
 import AddToCart from "./AddToCart";
 
-const Details = ({ product }: IProduct) => {
-  const commentsNumb = product.comments.filter((comment) => comment.isAccept);
+const Details = ({ product }: { product: IProduct }) => {
+  const acceptedComments = product.comments.filter(
+    (comment): comment is IComment =>
+      typeof comment === "object" && "isAccept" in comment && (comment as IComment).isAccept
+  );
   return (
     <div className="flex-grow">
       <div>BreadCrump</div>
@@ -22,7 +26,7 @@ const Details = ({ product }: IProduct) => {
           )}
 
           <span className="text-base-content mx-2">
-            (دیدگاه کاربر {commentsNumb.length})
+            (دیدگاه کاربر {acceptedComments.length})
           </span>
         </div>
         <div className="mt-4">
@@ -40,7 +44,7 @@ const Details = ({ product }: IProduct) => {
         <AddToCart product={product} />
         <div className="my-6 py-6 border-y border-base-content/20">
           <p className=" ">
-            <strong>شناسه : </strong> {product._id}
+            <strong>شناسه : </strong> {String(product._id)}
           </p>
           <p className="mt-4">
             <strong>برچسب : </strong> {product.tags.join(" , ")}

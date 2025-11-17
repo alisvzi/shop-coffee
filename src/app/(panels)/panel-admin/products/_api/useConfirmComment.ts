@@ -5,7 +5,7 @@ export const useConfirmComment = () => {
   const { confirm } = useDialog();
   const router = useRouter();
 
-  const acceptComment = async (commentID) => {
+  const acceptComment = async (commentID: string) => {
     const res = await fetch("/api/comments/accept", {
       method: "PUT",
       headers: {
@@ -28,7 +28,7 @@ export const useConfirmComment = () => {
     }
   };
 
-  const rejectComment = async (commentID) => {
+  const rejectComment = async (commentID: string) => {
     const res = await fetch("/api/comments/reject", {
       method: "PUT",
       headers: {

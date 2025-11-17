@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-const Ticket = ({ _id, title, department, hasAnswer, date }) => {
+type TicketProps = {
+  _id: string;
+  title: string;
+  department: string;
+  hasAnswer: boolean;
+  date: string | number | Date;
+};
+
+const Ticket = ({ _id, title, department, hasAnswer, date }: TicketProps) => {
   return (
     <Link
       href={`/panel-user/tickets/answer/${_id}`}
@@ -13,7 +21,7 @@ const Ticket = ({ _id, title, department, hasAnswer, date }) => {
         </p>
       </div>
       <div>
-        <p>{new Date(date).toLocaleString("fa-IR")}</p>
+        <p>{new Date(date as string | number | Date).toLocaleString("fa-IR")}</p>
         <p className="mt-2 px-2 py-1 text-center text-sm">
           {hasAnswer ? " پاسخ داده شده" : "پاسخ داده نشده"}
         </p>

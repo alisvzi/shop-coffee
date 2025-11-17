@@ -4,28 +4,28 @@ import { Button } from "@/app/_components/ui/button/button";
 import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
 import { Table } from "../../../_components/Table/Table";
 
-interface Product {
-  name: string;
-  date: string;
-  score: number;
-  body: string;
-  isAccept: boolean;
-}
+type DiscountRow = {
+  _id: string;
+  code: string;
+  percent: number;
+  maxUse: number;
+  uses: number;
+};
 
-export default function DiscountsTable({ discounts }) {
+export default function DiscountsTable({ discounts }: { discounts: DiscountRow[] }) {
   const { confirm } = useDialog();
 
-  const seeComment = async (bodyText) => {
+  const confirmDelete = async (code: string) => {
     await confirm({
-      title: "متن نظر",
-      description: bodyText,
-      variant: "success",
+      title: "حذف تخفیف",
+      description: `کد: ${code}`,
+      variant: "warning",
       isQuestion: false,
     });
   };
 
   return (
-    <Table<Product>
+    <Table<DiscountRow>
       columns={[
         {
           key: "code",
@@ -34,7 +34,7 @@ export default function DiscountsTable({ discounts }) {
         {
           key: "percent",
           header: "درصد",
-          render: (value) => <>{value}%</>,
+          render: (value) => <>{(value as number)}%</>,
         },
         {
           key: "maxUse",
@@ -52,7 +52,7 @@ export default function DiscountsTable({ discounts }) {
         <div className="flex gap-2 justify-center">
           <Button
             type="button"
-            onClick={() => seeComment(row.body)}
+            onClick={() => confirmDelete(row.code)}
             size="small"
             variant="error"
           >

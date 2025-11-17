@@ -5,17 +5,17 @@ import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
 import { Rating } from "@/app/_components/ui/rating";
 import { Table } from "../../../_components/Table/Table";
 
-interface Product {
+type ProductRow = {
+  _id: string;
   name: string;
-  date: string;
+  price: number;
   score: number;
-  body: string;
-  isAccept: boolean;
-}
+  shortDesc: string;
+};
 
-export default function ProductsTable({ products }) {
+export default function ProductsTable({ products }: { products: ProductRow[] }) {
   const { confirm } = useDialog();
-  const seeDetails = async (bodyText) => {
+  const seeDetails = async (bodyText: string) => {
     await confirm({
       title: "جزئیات",
       description: bodyText,
@@ -25,7 +25,7 @@ export default function ProductsTable({ products }) {
   };
 
   return (
-    <Table<Product>
+    <Table<ProductRow>
       columns={[
         {
           key: "name",
@@ -34,13 +34,13 @@ export default function ProductsTable({ products }) {
         {
           key: "price",
           header: "قیمت",
-          render: (value) => value.toLocaleString(),
+          render: (value) => (value as number).toLocaleString(),
         },
         {
           key: "score",
           header: "امتیاز",
           render: (value) => (
-            <Rating rate={value} size="small" className="justify-center" />
+            <Rating rate={value as number} size="small" className="justify-center" />
           ),
         },
       ]}

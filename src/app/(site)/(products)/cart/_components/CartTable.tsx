@@ -1,7 +1,14 @@
 import { Button } from "@/app/_components/ui/button/button";
 import Link from "next/link";
 
-const CartTable = ({ cart }) => {
+type CartItem = {
+  name: string;
+  price: number;
+  count: number;
+  id?: string;
+};
+
+const CartTable = ({ cart }: { cart: CartItem[] }) => {
   return (
     <div className="flex-1 overflow-x-auto bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold mb-6 text-base-content/80">

@@ -1,4 +1,4 @@
-import { Size } from "../types/size.type";
+import { Size } from "../../types/size.type";
 import { ProgressProps } from "./progress.types";
 import classNames from 'classnames';
 
@@ -7,6 +7,7 @@ const sizeClasses: Record<Size, string> = {
     small: "progress-sm",
     normal: "progress-md",
     large: "progress-lg",
+    xl: "progress-lg",
   };
 
 export const Progress: React.FC<ProgressProps> =({

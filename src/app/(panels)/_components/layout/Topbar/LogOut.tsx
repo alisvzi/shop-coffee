@@ -7,7 +7,7 @@ const LogOut = () => {
   const { confirm } = useDialog();
   const router = useRouter();
 
-  const logOutHandler = async (bodyText) => {
+  const logOutHandler = async () => {
     const ok = await confirm({
       title: "خروج از حساب",
       description: "آیا میخواهید از حساب کاربری خود خارج شوید ؟",

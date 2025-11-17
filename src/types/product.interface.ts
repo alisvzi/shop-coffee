@@ -1,6 +1,8 @@
 import { ObjectId } from "mongoose";
+import type { IComment } from "./comment.interface";
 
 export interface IProduct {
+  _id: string | ObjectId;
   name: string;
   price: number;
   shortDesc: string;
@@ -11,5 +13,5 @@ export interface IProduct {
   score: number;
   tags: string[];
   img: string;
-  comments: ObjectId[];
+  comments: Array<ObjectId | IComment>;
 }

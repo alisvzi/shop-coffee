@@ -2,8 +2,25 @@
 
 import { Comment } from "@/app/_components/ui/comment";
 import CommentsForm from "./CommentForm";
+import type { ObjectId } from "mongoose";
 
-const ProductComments = ({ comments, productID }) => {
+type CommentItem = {
+  _id: string | ObjectId;
+  userName: string;
+  date: Date | string;
+  email: string;
+  body: string;
+  score: number | null;
+  isAccept: boolean;
+};
+
+const ProductComments = ({
+  comments,
+  productID,
+}: {
+  comments: CommentItem[];
+  productID: string;
+}) => {
   // const { userName, date, email, body, score, product } = comments;
 
   return (
@@ -11,7 +28,9 @@ const ProductComments = ({ comments, productID }) => {
       <div>
         {comments.map((comment) => {
           if (comment?.isAccept) {
-            return <Comment key={`comment-${comment._id}`} {...comment} />;
+            return (
+              <Comment key={`comment-${String(comment._id)}`} {...comment} />
+            );
           }
         })}
 

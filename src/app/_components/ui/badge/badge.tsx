@@ -9,6 +9,7 @@ const sizeClasses: Record<Size, string> = {
   small: "badge-sm",
   normal: "badge-md",
   large: "badge-lg",
+  xl: "badge-lg",
 };
 
 export type BadgeProps = Omit<ComponentBase, "isDisabled"> & {

@@ -7,6 +7,6 @@ export interface IComment {
   body: string;
   isAccept: boolean;
   score: number | null;
-  product: ObjectId;
-  user: ObjectId;
+  product: string | ObjectId;
+  user: string | ObjectId;
 }

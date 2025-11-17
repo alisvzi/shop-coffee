@@ -1,7 +1,11 @@
 import Link from "next/link";
+import React from "react";
 
-const Stepper = ({ steps, currentStep }) => {
-  const getStatus = (stepId) => {
+type Step = { id: string | number; href: string; label: string };
+type StepperProps = { steps: Step[]; currentStep: string | number };
+
+const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
+  const getStatus = (stepId: string | number) => {
     const currentIndex = steps.findIndex((s) => s.id === currentStep);
     const stepIndex = steps.findIndex((s) => s.id === stepId);
     if (stepIndex < currentIndex) return "complete";
@@ -12,7 +16,7 @@ const Stepper = ({ steps, currentStep }) => {
   return (
     <div className="bg-gradient-to-r from-gradient-first to-base-content text-white p-8 shadow-lg">
       <nav className="flex justify-center items-center rtl:space-x-reverse">
-        {steps.map((step, index) => {
+        {steps.map((step: Step, index: number) => {
           const status = getStatus(step.id);
           const isLast = index === steps.length - 1;
 

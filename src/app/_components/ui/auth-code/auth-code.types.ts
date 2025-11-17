@@ -1,4 +1,4 @@
-import { ComponentBase } from "../types/component-base.type";
+import { ComponentBase } from "../../types/component-base.type";
 
 export type AuthCodeProps = Omit<ComponentBase, 'size'> & {
     autoFocus?: boolean;

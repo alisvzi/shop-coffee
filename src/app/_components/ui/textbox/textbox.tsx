@@ -9,6 +9,7 @@ const sizeClasses: Record<Size, string> = {
   small: "textbox-sm",
   normal: "textbox-md",
   large: "textbox-lg",
+  xl: "textbox-xl",
 };
 
 export const Textbox: React.FC<TextboxProps> = forwardRef<

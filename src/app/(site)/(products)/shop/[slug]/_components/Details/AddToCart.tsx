@@ -5,8 +5,13 @@ import useAuthUser from "@/hooks/useAuthUser";
 import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
 import { useState } from "react";
 import useAddToCart from "../../_api/add-to-cart";
+import type { IProduct } from "@/types/product.interface";
 
-const AddToCart = ({ product }) => {
+const AddToCart = ({
+  product,
+}: {
+  product: Pick<IProduct, "_id" | "name" | "price">;
+}) => {
   const user = useAuthUser();
   const addToCart = useAddToCart();
   const [count, setCount] = useState<number>(1);
@@ -38,7 +43,7 @@ const AddToCart = ({ product }) => {
   };
 
   const addToWishlist = async () => {
-    if (!user?._id) {
+    if (!user || !user._id) {
       await confirm({
         title: "نیاز به ورود",
         description: "برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید",
@@ -50,8 +55,8 @@ const AddToCart = ({ product }) => {
     }
 
     const wish = {
-      user: user?._id,
-      product: product?._id,
+      user: user._id,
+      product: product._id,
     };
 
     const res = await fetch("/api/wishlist", {

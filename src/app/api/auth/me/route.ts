@@ -4,7 +4,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import connectToDB from "../../../../../configs/db";
 
-export async function GET(req) {
+export async function GET() {
   await connectToDB();
 
   const cookiesObj = await cookies();

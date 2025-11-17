@@ -21,10 +21,12 @@ const Wishlist = async () => {
   let wishes: WishItem[] = [];
   const user = await authUser();
   if (user) {
-    wishes = await wishlistModel
+    const raw = await wishlistModel
       .find({ user: user._id }, "-__v")
       .populate("product", "name price score")
       .lean();
+    // Convert ObjectId values returned by lean() into strings for typing safety
+    wishes = JSON.parse(JSON.stringify(raw)) as WishItem[];
   }
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -68,7 +70,7 @@ const Wishlist = async () => {
               <div className="divide-y divide-gray-200">
                 {wishes.map((item) => (
                   <div
-                    key={item._id}
+                    key={String(item._id)}
                     className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
                   >
                     {/* تصویر محصول */}

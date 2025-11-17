@@ -6,19 +6,22 @@ import { Rating } from "@/app/_components/ui/rating";
 import { Table } from "../../../_components/Table/Table";
 import { useConfirmComment } from "../_api/useConfirmComment";
 
-interface Product {
-  name: string;
-  date: string;
+type CommentRow = {
+  _id: string;
+  userName: string;
+  user: { email: string } | null;
+  product: { name: string } | null;
+  date: string | number | Date;
   score: number;
   body: string;
   isAccept: boolean;
-}
+};
 
-export default function CommentTable({ comments }) {
+export default function CommentTable({ comments }: { comments: CommentRow[] }) {
   const { confirm } = useDialog();
   const { acceptComment, rejectComment } = useConfirmComment();
 
-  const seeComment = async (bodyText) => {
+  const seeComment = async (bodyText: string) => {
     await confirm({
       title: "متن نظر",
       description: bodyText,
@@ -28,7 +31,7 @@ export default function CommentTable({ comments }) {
   };
 
   return (
-    <Table<Product>
+    <Table<CommentRow>
       columns={[
         {
           key: "userName",
@@ -37,25 +40,25 @@ export default function CommentTable({ comments }) {
         {
           key: "user",
           header: "ایمیل",
-          render: (value) => value?.email,
+          render: (value) => (value as { email: string } | null)?.email,
         },
         {
           key: "score",
           header: "امتیاز",
           render: (value) => (
-            <Rating rate={value} size="small" className="justify-center" />
+            <Rating rate={value as number} size="small" className="justify-center" />
           ),
         },
         {
           key: "product",
           header: "محصول",
-          render: (value) => value?.name,
+          render: (value) => (value as { name: string } | null)?.name,
         },
         {
           key: "date",
           header: "تاریخ",
           render: (value) => (
-            <span>{new Date(value).toLocaleString("fa-IR")}</span>
+            <span>{new Date(value as string | number | Date).toLocaleString("fa-IR")}</span>
           ),
         },
       ]}

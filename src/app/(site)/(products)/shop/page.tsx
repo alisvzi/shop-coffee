@@ -1,7 +1,6 @@
 import productModel from "@/models/Product";
 import connectToDB from "../../../../../configs/db";
 import { ProductCard } from "../_components/ProductCard";
-import { RadioRating } from "@/app/_components/ui/radio-rating/radio-rating";
 
 const Shop: React.FC = async () => {
   await connectToDB();
@@ -26,13 +25,21 @@ const Shop: React.FC = async () => {
         <div>
           <label className="block text-sm mb-2">قیمت</label>
           <div className="grid grid-cols-2 gap-3">
-            <input type="number" placeholder="حداقل" className="input input-bordered w-full" />
-            <input type="number" placeholder="حداکثر" className="input input-bordered w-full" />
+            <input
+              type="number"
+              placeholder="حداقل"
+              className="input input-bordered w-full"
+            />
+            <input
+              type="number"
+              placeholder="حداکثر"
+              className="input input-bordered w-full"
+            />
           </div>
         </div>
         <div>
           <label className="block text-sm mb-2">امتیاز</label>
-          <RadioRating value={null} onChange={() => {}} size="small" />
+          {/* <RadioRating value={null} onChange={() => {}} size="small" /> */}
         </div>
         <button className="btn btn-primary w-full">اعمال فیلتر</button>
       </aside>

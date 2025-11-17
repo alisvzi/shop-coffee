@@ -1,7 +1,15 @@
 // TicketList.js
 import Ticket from "./Ticket";
 
-const TicketList = ({ tickets }) => {
+type TicketItem = {
+  _id: string;
+  title: string;
+  createdAt: string | number | Date;
+  department: { title: string } | string;
+  hasAnswer: boolean;
+};
+
+const TicketList = ({ tickets }: { tickets: TicketItem[] }) => {
   return (
     <>
       <div className="mb-6">
@@ -12,7 +20,7 @@ const TicketList = ({ tickets }) => {
         {tickets.length === 0 ? (
           <p className="text-center ">تیکتی وجود ندارد.</p>
         ) : (
-          tickets.map((ticket) => (
+          tickets.map((ticket: TicketItem) => (
             <Ticket
               key={ticket._id}
               _id={ticket._id}

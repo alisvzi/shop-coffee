@@ -1,23 +1,20 @@
 import { IconStar } from "@/app/_components/icons/icons";
 import { Price } from "@/app/_components/ui/price";
-import { CourseSummary } from "@/types/course-summary.interface";
+// Removed unused CourseSummary type; define explicit props for this card
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export type CourseCardProps = CourseSummary & {};
+type ProductCardProps = {
+  _id: string | { toString(): string };
+  img: string;
+  price: number;
+  score?: number;
+  name: string;
+  weight: number;
+};
 
-// export const ProductCard: React.FC<CourseCardProps> = ({
-//   coverImageId,
-//   title,
-//   subTitle,
-//   level,
-//   recordStatus,
-//   basePrice,
-//   duration,
-//   slug,
-// })
-export const ProductCard: React.FC = ({
+export const ProductCard: React.FC<ProductCardProps> = ({
   img,
   price,
   score,
@@ -27,7 +24,7 @@ export const ProductCard: React.FC = ({
 }) => {
   return (
     <div className="card">
-      <Link href={`/shop/${_id}`}>
+      <Link href={`/shop/${String(_id)}`}>
         <figure>
           <Image
             src={img}

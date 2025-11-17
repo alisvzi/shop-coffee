@@ -1,7 +1,17 @@
 import { Avatar } from "@/app/_components/ui/avatar";
+import { Variant } from "@/app/_components/types/variant.type";
 
-const Answer = ({ type, variant, time = "8:56 1402/10/21", body }) => {
+type AnswerProps = {
+  type: "user" | "admin" | "";
+  variant?: Variant | "";
+  time?: string | number | Date;
+  body: string;
+};
+
+const Answer = ({ type, variant, time = "8:56 1402/10/21", body }: AnswerProps) => {
   const isUser = type === "user";
+  const avatarVariant: Variant | undefined = variant ? (variant as Variant) : undefined;
+  const bubbleClass = variant ? `comment-bubble comment-bubble-${variant}` : "comment-bubble";
 
   return (
     <div className={`comment comment-${isUser ? "end" : "start"}`}>
@@ -10,7 +20,7 @@ const Answer = ({ type, variant, time = "8:56 1402/10/21", body }) => {
           src={isUser ? "/images/shahin.jpg" : "/images/admin.jpg"}
           alt={isUser ? "User" : "Admin"}
           size="tiny"
-          variant={variant}
+          variant={avatarVariant}
         />
       </div>
       <div className="comment-header">
@@ -19,7 +29,7 @@ const Answer = ({ type, variant, time = "8:56 1402/10/21", body }) => {
           {new Date(time).toLocaleString("fa-IR")}
         </time>
       </div>
-      <div className={`comment-bubble ${"comment-bubble-" + variant}`}>
+      <div className={bubbleClass}>
         {body}
       </div>
       {/* {score && score > 0 && (

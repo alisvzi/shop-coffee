@@ -15,7 +15,7 @@ interface CommentsFormProps {
   productID: string;
 }
 
-const CommentsForm = ({ productID }: CommentsFormProps): JSX.Element => {
+const CommentsForm = ({ productID }: CommentsFormProps) => {
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ const CommentsForm = ({ productID }: CommentsFormProps): JSX.Element => {
   const router = useRouter();
   const { confirm } = useDialog();
 
-  const { submit, isLoading } = useSendComment({
+  const { submit, isPending } = useSendComment({
     onSuccess: async () => {
       const ok = await confirm({
         title: "کامنت مورد نظر با موفقیت ثبت شد",
@@ -113,7 +113,7 @@ const CommentsForm = ({ productID }: CommentsFormProps): JSX.Element => {
         />
 
         <div>
-          <Button type="submit" variant="primary" isLoading={isLoading}>
+          <Button type="submit" variant="primary" isLoading={isPending}>
             تایید
           </Button>
         </div>

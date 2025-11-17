@@ -1,6 +1,10 @@
 "use client";
 
-import { IconUserProfile, IconBasket, IconHeart } from "@/app/_components/icons/icons";
+import {
+  IconBasket,
+  IconHeart,
+  IconUserProfile,
+} from "@/app/_components/icons/icons";
 import { Loading } from "@/app/_components/ui/loading";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -31,21 +35,18 @@ const HeaderUserSection: React.FC<IHeaderUserProps> = ({ isLogin }) => {
               className="flex gap-x-2 items-center hover:text-primary transition-colors p-2 hover:bg-base-25 active:bg-base-50 rounded-lg"
             >
               <IconUserProfile width={20} height={20} />
-              ورود به پنل
             </Link>
             <Link
               href="/wishlist"
               className="flex gap-x-2 items-center hover:text-primary transition-colors p-2 hover:bg-base-25 active:bg-base-50 rounded-lg"
             >
               <IconHeart width={20} height={20} />
-              علاقهمندیها
             </Link>
             <Link
               href="/cart"
               className="flex gap-x-2 items-center hover:text-primary transition-colors p-2 hover:bg-base-25 active:bg-base-50 rounded-lg"
             >
               <IconBasket width={20} height={20} />
-              سبد خرید
             </Link>
             <LogoutButton />
           </div>

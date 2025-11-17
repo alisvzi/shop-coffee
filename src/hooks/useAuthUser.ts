@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import type { IUser } from "@/types/user.interface";
 
 function useAuthUser() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
     const authUser = async () => {

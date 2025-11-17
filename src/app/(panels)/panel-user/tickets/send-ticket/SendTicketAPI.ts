@@ -1,5 +1,6 @@
 import { createData } from "@/core/http-service/http-service";
 import { useMutation } from "@tanstack/react-query";
+import type { ticketType } from "./SendTicketForm";
 
 const account = (model: ticketType): Promise<void> =>
   createData<ticketType, void>("/tickets", model);

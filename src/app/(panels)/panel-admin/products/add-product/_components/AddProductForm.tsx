@@ -5,11 +5,24 @@ import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface FormDataState {
+  name: string;
+  price: string;
+  shortDesc: string;
+  longDesc: string;
+  weight: string;
+  suitableFor: string;
+  smell: string;
+  score: string;
+  img: File | null;
+  tags: string[];
+}
+
 const AddProductForm = () => {
   const { confirm } = useDialog();
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormDataState>({
     name: "",
     price: "",
     shortDesc: "",
@@ -23,14 +36,19 @@ const AddProductForm = () => {
   });
 
   const [tagInput, setTagInput] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    const files = (e.target as HTMLInputElement).files;
     if (name === "img") {
       setFormData((prev) => ({
         ...prev,
-        img: files[0] || null,
+        img: files?.[0] || null,
       }));
     } else {
       setFormData((prev) => ({
@@ -47,7 +65,7 @@ const AddProductForm = () => {
     }
   };
 
-  const handleTagInputChange = (e) => {
+  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagInput(e.target.value);
     if (errors.tags) {
       setErrors((prev) => ({
@@ -76,7 +94,7 @@ const AddProductForm = () => {
     setTagInput("");
   };
 
-  const removeTag = (tagToRemove) => {
+  const removeTag = (tagToRemove: string) => {
     setFormData((prev) => ({
       ...prev,
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
@@ -84,7 +102,7 @@ const AddProductForm = () => {
   };
 
   const validate = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) newErrors.name = "ضروری است";
     if (!formData.price) newErrors.price = "ضروری است";
@@ -103,7 +121,7 @@ const AddProductForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validate()) return;
@@ -117,7 +135,9 @@ const AddProductForm = () => {
     data.append("suitableFor", formData.suitableFor);
     data.append("smell", formData.smell);
     data.append("score", formData.score);
-    data.append("img", formData.img);
+    if (formData.img) {
+      data.append("img", formData.img);
+    }
     data.append("tags", JSON.stringify(formData.tags));
 
     try {
@@ -139,9 +159,10 @@ const AddProductForm = () => {
         }).then(() => router.push("/panel-admin/products"));
       }
     } catch (error) {
+      const message = error instanceof Error ? error.message : "مشکلی رخ داد";
       await confirm({
         title: "خطا در ثبت محصول",
-        description: String(error?.message || "مشکلی رخ داد"),
+        description: message,
         isQuestion: false,
         variant: "error",
         confirmText: "باشه",
@@ -149,7 +170,7 @@ const AddProductForm = () => {
     }
   };
 
-  const inputClass = (field) =>
+  const inputClass = (field: keyof FormDataState) =>
     `border rounded px-3 py-2 w-full focus:outline-none ${
       errors[field] ? "border-error" : "border-gray-300"
     }`;

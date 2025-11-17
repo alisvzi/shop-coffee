@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle } from "react";
-import { Size } from "../types/size.type";
+import { Size } from "../../types/size.type";
 import { TimerProps, TimerRef } from "./timer.types";
 import { useTimer } from "react-timer-hook";
 import classNames from "classnames";
@@ -10,6 +10,7 @@ const sizeClasses: Record<Size, string> = {
     small: "timer-sm",
     normal: "timer-md",
     large: "timer-lg",
+    xl: "timer-xl",
 };
 
 const calculateTotalSeconds = (

@@ -7,6 +7,7 @@ const sizeClasses: Record<Size, number> = {
   small: 18,
   normal: 24,
   large: 30,
+  xl: 36,
 };
 
 export const Rating: React.FC<RatingProps> = ({

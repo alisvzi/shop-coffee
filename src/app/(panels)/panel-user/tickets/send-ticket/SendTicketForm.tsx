@@ -22,7 +22,12 @@ const priorities = [
   { value: 3, label: "زیاد" },
 ];
 
-const SendTicketForm = ({ departments, subdepartments }) => {
+type SendTicketFormProps = {
+  departments: Array<{ _id: string; title: string }>;
+  subdepartments: Array<{ _id: string; title: string; department: string }>;
+};
+
+const SendTicketForm = ({ departments, subdepartments }: SendTicketFormProps) => {
   const {
     register,
     handleSubmit,

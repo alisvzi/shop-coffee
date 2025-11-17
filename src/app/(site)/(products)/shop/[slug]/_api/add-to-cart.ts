@@ -1,4 +1,5 @@
 import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
+import type { IProduct } from "@/types/product.interface";
 
 const useAddToCart = () => {
   const { confirm } = useDialog();
@@ -13,16 +14,22 @@ const useAddToCart = () => {
     });
   };
 
-  const addToCart = async (product, count) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  type CartItem = { id: string; name: string; price: number; count: number };
 
-    const existingItemIndex = cart.findIndex((item) => item.id === product._id);
+  const addToCart = async (
+    product: Pick<IProduct, "_id" | "name" | "price">,
+    count: number
+  ) => {
+    const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const productId = String(product._id);
+    const existingItemIndex = cart.findIndex((item) => item.id === productId);
 
     if (existingItemIndex !== -1) {
       cart[existingItemIndex].count += count;
     } else {
-      const cartItem = {
-        id: product._id,
+      const cartItem: CartItem = {
+        id: productId,
         name: product.name,
         price: product.price,
         count,

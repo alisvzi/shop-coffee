@@ -49,7 +49,7 @@ export function Dialog({
 
         {isQuestion ? (
           <div className="flex justify-end gap-3">
-            <Button onClick={onCancel} variant="natural" size="small">
+            <Button onClick={onCancel} variant="neutral" size="small">
               {cancelText}
             </Button>
             <Button onClick={onConfirm} variant={variant} size="small">

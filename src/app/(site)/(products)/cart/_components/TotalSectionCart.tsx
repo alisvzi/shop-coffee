@@ -6,29 +6,40 @@ import stateData from "@/utils/stateData";
 import Link from "next/link";
 import { useState } from "react";
 import Select from "react-select";
+import type { SingleValue } from "react-select";
 import SetDiscount from "./SetDiscount";
 
-const TotalSectionCart = ({ cart }) => {
+type CartItem = {
+  name: string;
+  price: number;
+  count: number;
+  id?: string;
+};
+
+type StateOption = { label: string; value: string; cities: string[] };
+type CityOption = { label: string; value: string };
+
+const TotalSectionCart = ({ cart }: { cart: CartItem[] }) => {
   const [changeAddress, setChangeAddress] = useState(false);
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedState, setSelectedState] = useState<StateOption | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   const [discountPercent, setDiscountPercent] = useState(0);
 
   // Prepare state options for react-select
-  const stateOptions = stateData().map((state) => ({
+  const stateOptions: StateOption[] = stateData().map((state) => ({
     label: state.label,
     value: state.label,
     cities: state.value,
   }));
 
   // When a state is selected, reset city selection
-  const handleStateChange = (option) => {
-    setSelectedState(option);
+  const handleStateChange = (option: SingleValue<StateOption>) => {
+    setSelectedState(option ?? null);
     setSelectedCity(null);
   };
 
   // Prepare city options based on selected state
-  const cityOptions = selectedState
+  const cityOptions: CityOption[] = selectedState
     ? selectedState.cities.map((city) => ({ label: city, value: city }))
     : [];
 
@@ -93,7 +104,7 @@ const TotalSectionCart = ({ cart }) => {
           <Select
             options={cityOptions}
             value={selectedCity}
-            onChange={setSelectedCity}
+            onChange={(opt) => setSelectedCity(opt as SingleValue<CityOption> ?? null)}
             placeholder="شهر را انتخاب کنید"
             isDisabled={!selectedState}
             isRtl

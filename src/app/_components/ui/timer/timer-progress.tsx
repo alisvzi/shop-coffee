@@ -1,8 +1,8 @@
 "use client";
-import React, { ReactNode, useEffect, useState } from "react";
 import classNames from "classnames";
+import React, { useEffect, useState } from "react";
+import { Size } from "../../types/size.type";
 import { TimerProgressProps } from "./timer.types";
-import { Size } from "../types/size.type";
 import { padWithZero } from "@/utils/string";
 
 
@@ -11,6 +11,7 @@ const sizes: Record<Size, number> = {
   small: 34,
   normal: 43,
   large: 54,
+  xl: 64,
 };
 
 export const TimerProgress: React.FC<TimerProgressProps> = ({

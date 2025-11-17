@@ -1,7 +1,7 @@
 "use client";
 import React, {useState } from "react";
 import { AccordionProps } from "./accordion.types";
-import { IconChevronDown, IconChevronUp } from "../icons/icons";
+import { IconChevronDown, IconChevronUp } from "@/app/_components/icons/icons";
 
 export const Accordion: React.FC<AccordionProps> = ({
   data,

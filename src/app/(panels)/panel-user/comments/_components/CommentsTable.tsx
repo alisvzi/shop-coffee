@@ -5,24 +5,34 @@ import { useDialog } from "@/app/_components/ui/dialog/DialogProvider";
 import { Rating } from "@/app/_components/ui/rating";
 import { Table } from "../../../_components/Table/Table";
 
-interface Product {
+type CommentRow = {
   name: string;
   date: string;
   score: number;
   body: string;
   isAccept: boolean;
-}
+};
 
-export default function CommentTable({ comments }) {
+export default function CommentTable({
+  comments,
+}: {
+  comments: Array<{
+    product: { name: string } | null;
+    date: string | number | Date;
+    score: number | null;
+    body: string;
+    isAccept: boolean;
+  }>;
+}) {
   const { confirm } = useDialog();
 
-  const commentsList = [];
+  const commentsList: CommentRow[] = [];
 
   comments.forEach((element) => {
-    const comment = {
-      name: element.product.name,
+    const comment: CommentRow = {
+      name: element.product ? element.product.name : "",
       date: new Date(element.date).toLocaleDateString("fa-IR"),
-      score: element.score,
+      score: Number(element.score ?? 0),
       isAccept: element.isAccept,
       body: element.body,
     };
@@ -30,7 +40,7 @@ export default function CommentTable({ comments }) {
     commentsList.push(comment);
   });
 
-  const seeComment = async (bodyText) => {
+  const seeComment = async (bodyText: string) => {
     await confirm({
       title: "متن نظر",
       description: bodyText,
@@ -39,7 +49,7 @@ export default function CommentTable({ comments }) {
     });
   };
   return (
-    <Table<Product>
+    <Table<CommentRow>
       columns={[
         {
           key: "date",
@@ -50,14 +60,18 @@ export default function CommentTable({ comments }) {
           key: "score",
           header: "امتیاز",
           render: (value) => (
-            <Rating rate={value} size="small" className="justify-center" />
+            <Rating
+              rate={value as number}
+              size="small"
+              className="justify-center"
+            />
           ),
         },
         {
           key: "isAccept",
           header: "موجودی",
           render: (value) =>
-            value ? (
+            (value as boolean) ? (
               <span className="text-success font-medium">تایید شده</span>
             ) : (
               <span className="text-warning font-medium">در انتظار تایید</span>

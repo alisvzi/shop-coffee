@@ -5,7 +5,7 @@ import { TableBody } from "./TableBody";
 import { TableHeader } from "./TableHeader";
 import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
-import { TableProps } from "./table.types";
+import { TableProps, Column } from "./table.types";
 
 export function Table<T extends object>({
   columns,

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Size } from "../types/size.type";
+import { Size } from "../../types/size.type";
 import { LoadingProps } from "./loading.types";
 import classNames from "classnames";
 
@@ -9,6 +9,7 @@ const sizeClasses: Record<Size, string> = {
   small: "loading-sm",
   normal: "loading-md",
   large: "loading-lg",
+  xl: "loading-lg",
 };
 
 export const Loading: React.FC<LoadingProps> = ({

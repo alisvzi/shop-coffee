@@ -4,11 +4,9 @@ import { Rating } from "../rating/rating";
 import { CommentProps } from "./comment.types";
 
 export const Comment: React.FC<CommentProps> = ({
-  _id,
   userName,
   date,
   score,
-  email,
   body,
   variant = "neutral",
 }) => {
