@@ -23,7 +23,8 @@
     "react-hook-form": "^7.62.0",
     "react-select": "^5.10.2",
     "recharts": "^3.2.1",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

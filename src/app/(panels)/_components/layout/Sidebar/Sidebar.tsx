@@ -3,7 +3,19 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Sidebar({ menuItems }) {
+type MenuLeafItem = {
+  label: string;
+  icon?: React.ReactNode | string;
+  href: string;
+};
+type MenuParentItem = {
+  label: string;
+  icon?: React.ReactNode | string;
+  children: { label: string; href: string }[];
+};
+type MenuItem = MenuLeafItem | MenuParentItem;
+
+export default function Sidebar({ menuItems }: { menuItems: MenuItem[] }) {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
 
   const toggleMenu = (label: string) => {
@@ -23,7 +35,7 @@ export default function Sidebar({ menuItems }) {
       <nav className="shadow-md flex-1 overflow-y-auto p-6">
         <ul className="space-y-4">
           {menuItems.map((item) =>
-            item.children ? (
+            'children' in item ? (
               <li key={item.label}>
                 <button
                   onClick={() => toggleMenu(item.label)}
