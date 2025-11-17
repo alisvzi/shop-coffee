@@ -1,0 +1,18 @@
+.card {
+  @apply w-[268.8px] relative flex flex-col rounded-lg bg-white overflow-hidden border border-base-content/20 cursor-pointer;
+
+  &-body {
+    @apply p-3 flex flex-col flex-auto gap-2 text-sm leading-6 text-center;
+    :where(p) {
+      @apply flex-grow;
+    }
+  }
+
+  &-title {
+    @apply text-base-content;
+  }
+
+  &-footer {
+    @apply font-bold  flex items-center justify-end gap-2 pt-4 text-current border-t border-base-content/30;
+  }
+}
