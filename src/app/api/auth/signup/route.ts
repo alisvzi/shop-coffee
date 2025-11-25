@@ -39,7 +39,16 @@ export async function POST(req: NextRequest) {
     { message: "User signed up successfully  " },
     {
       status: 201,
-      headers: { "Set-Cookie": `token=${accessToken};path=/;httpOnly=true` },
+      headers: {
+        "Set-Cookie": (() => {
+          const isSecure = (process.env.NEXT_PUBLIC_APP_URL || "").startsWith("https") || process.env.NODE_ENV === "production";
+          const flags = ["Path=/", "HttpOnly"];
+          if (isSecure) {
+            flags.push("Secure", "SameSite=Lax");
+          }
+          return `token=${accessToken};${flags.join(";")}`;
+        })(),
+      },
     }
   );
 }

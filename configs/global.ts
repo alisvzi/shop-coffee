@@ -1,6 +1,5 @@
 // Environment Variables
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 // Environment Flags
 export const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
@@ -144,7 +143,7 @@ export const validateEnvVars = () => {
 
   if (missingVars.length > 0) {
     throw new Error(
-      `Missing required environment variables: ${missingVars.join(", ")}`,
+      `Missing required environment variables: ${missingVars.join(", ")}`
     );
   }
 };
