@@ -32,7 +32,7 @@ export default async function PanelLayout({
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="hidden md:flex">
-        <Sidebar menuItems={menuItems} />
+        <Sidebar menuItems={menuItems} userRole={user?.role} userName={user?.name} />
       </div>
       <div className="flex flex-1 flex-col">
         <Topbar />

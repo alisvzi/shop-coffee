@@ -18,10 +18,11 @@ export const verifyPassword = async (
 
 export const generateAccessToken = (data: {
   email?: string;
+  phone?: string;
   name?: string;
 }) => {
   const token = sign({ ...data }, process.env.AccessTokenSecretKey!, {
-    expiresIn: "60s",
+    expiresIn: "15m",
   });
 
   return token;
@@ -34,10 +35,13 @@ export const verifyAccessToken = (token: string) => {
   } catch (err) {
     console.log("verifyAccess Token Error --> ", err);
   }
-  return token;
+  return null;
 };
 
-export const generateRefreshToken = (data: { email: string }) => {
+export const generateRefreshToken = (data: {
+  email?: string;
+  phone?: string;
+}) => {
   const token = sign({ ...data }, process.env.RefreshTokenSecretKey!, {
     expiresIn: "15d",
   });

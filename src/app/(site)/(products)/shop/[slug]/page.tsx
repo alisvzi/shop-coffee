@@ -44,7 +44,7 @@ const ProductDetails = async ({
   return (
     <>
       <div className="container flex gap-10 py-10">
-        <ProductGallery />
+        <ProductGallery imageUrl={productDetails.img} />
         <Details product={productDetails} />
       </div>
 

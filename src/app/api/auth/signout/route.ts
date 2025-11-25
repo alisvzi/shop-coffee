@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 
 export async function POST() {
-  (await cookies()).delete("token");
+  const c = await cookies();
+  c.delete("token");
+  c.delete("refresh-token");
 
   return Response.json({ message: "Logout is done" });
 }

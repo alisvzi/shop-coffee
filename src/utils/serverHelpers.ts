@@ -35,12 +35,13 @@ const authUser = async () => {
   const token = cookiesObj.get("token")?.value;
   const refreshToken = cookiesObj.get("refresh-token")?.value;
 
-  if (!token) return null;
-  if (!refreshToken) return null;
+  if (!token && !refreshToken) return null;
 
-  let tokenPayload = verifyAccessToken(token) as JwtPayload | null;
+  let tokenPayload = token
+    ? (verifyAccessToken(token) as JwtPayload | null)
+    : null;
 
-  if (!tokenPayload) {
+  if (!tokenPayload && refreshToken) {
     try {
       const refreshPayload = verify(
         refreshToken,
@@ -54,8 +55,8 @@ const authUser = async () => {
         httpOnly: true,
         path: "/",
         maxAge: 60 * 15,
-        secure: true,
-        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
       });
 
       tokenPayload = refreshPayload;
@@ -64,7 +65,12 @@ const authUser = async () => {
     }
   }
 
-  const user = await userModel.findOne({ email: tokenPayload.email });
+  let user = null as any;
+  if ((tokenPayload as any)?.email) {
+    user = await userModel.findOne({ email: (tokenPayload as any).email });
+  } else if ((tokenPayload as any)?.phone) {
+    user = await userModel.findOne({ phone: (tokenPayload as any).phone });
+  }
   return user;
 };
 

@@ -15,7 +15,7 @@ type MenuParentItem = {
 };
 type MenuItem = MenuLeafItem | MenuParentItem;
 
-export default function Sidebar({ menuItems }: { menuItems: MenuItem[] }) {
+export default function Sidebar({ menuItems, userRole, userName }: { menuItems: MenuItem[]; userRole?: string; userName?: string }) {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
 
   const toggleMenu = (label: string) => {
@@ -101,11 +101,11 @@ export default function Sidebar({ menuItems }: { menuItems: MenuItem[] }) {
       >
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-content font-bold text-xl shadow-md">
-            ن
+            {userName ? userName[0] : "ن"}
           </div>
           <div className="flex flex-col text-sm">
-            <span className="font-semibold tracking-wide">نام کاربر</span>
-            <span className="text-xs tracking-wide">ادمین</span>
+            <span className="font-semibold tracking-wide">{userName ?? "نام کاربر"}</span>
+            <span className="text-xs tracking-wide">{userRole === "ADMIN" ? "ادمین" : "کاربر"}</span>
           </div>
         </div>
       </div>

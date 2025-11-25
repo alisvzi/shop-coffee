@@ -58,7 +58,7 @@ export const HomeHeroSection: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <IconBasket width={18} height={18} />
-              <span>بیش از ۴ نسل تجربه برشته‌کاری</span>
+              <span>بیش از ۴ نسل تجربه </span>
             </div>
           </div>
         </div>

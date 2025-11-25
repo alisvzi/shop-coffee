@@ -100,7 +100,7 @@ const SignUpForm = () => {
           variant="primary"
         />
 
-        <Button type="submit" variant="primary" isLoading={false}>
+        <Button type="submit" variant="primary" isLoading={signUp.isPending}>
           تایید و دریافت کد
         </Button>
 

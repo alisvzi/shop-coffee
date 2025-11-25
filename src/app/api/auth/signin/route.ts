@@ -33,7 +33,10 @@ export async function POST(req: NextRequest) {
       return Response.json({ message: "User not found" }, { status: 422 });
     }
 
-    const isCorrectPasswordWithHash = await verifyPassword(password, user.password);
+    const isCorrectPasswordWithHash = await verifyPassword(
+      password,
+      user.password
+    );
 
     if (!isCorrectPasswordWithHash) {
       return Response.json(
@@ -47,11 +50,23 @@ export async function POST(req: NextRequest) {
 
     await userModel.findOneAndUpdate({ email }, { $set: { refreshToken } });
 
+    const isSecure =
+      (process.env.NEXT_PUBLIC_APP_URL || "").startsWith("https") ||
+      process.env.NODE_ENV === "production";
+    const accessFlags = ["Path=/", "HttpOnly", `Max-Age=${60 * 15}`];
+    const refreshFlags = ["Path=/", "HttpOnly", `Max-Age=${60 * 60 * 24 * 15}`];
+    if (isSecure) {
+      accessFlags.push("Secure", "SameSite=Lax");
+      refreshFlags.push("Secure", "SameSite=Lax");
+    }
     const headers = new Headers();
-    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
     headers.append(
       "Set-Cookie",
-      `refresh-token=${refreshToken};path=/;httpOnly=true`
+      `token=${accessToken};${accessFlags.join(";")}`
+    );
+    headers.append(
+      "Set-Cookie",
+      `refresh-token=${refreshToken};${refreshFlags.join(";")}`
     );
 
     return Response.json(

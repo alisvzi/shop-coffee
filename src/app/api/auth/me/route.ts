@@ -29,4 +29,8 @@ export async function GET() {
       );
     }
   }
+  return Response.json(
+    { data: null, message: "Not access" },
+    { status: 401 }
+  );
 }

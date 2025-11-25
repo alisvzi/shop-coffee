@@ -9,12 +9,9 @@ import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ProductGallery = () => {
+const ProductGallery = ({ imageUrl }: { imageUrl: string }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-  const images = [
-    "https://set-coffee.com/wp-content/uploads/2020/12/Gold-DG-700x700.jpg",
-    "https://set-coffee.com/wp-content/uploads/2020/12/Gold-box-DG--150x150.jpg",
-  ];
+  const images = [imageUrl, imageUrl, imageUrl];
 
   return (
     <section style={{ width: "36%" }}>
@@ -29,8 +26,8 @@ const ProductGallery = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2 gallery-slider"
       >
-        {images.map((img) => (
-          <SwiperSlide key={Math.random()}>
+        {images.map((img, idx) => (
+          <SwiperSlide key={`main-${idx}`}>
             <img src={img} />
           </SwiperSlide>
         ))}
@@ -45,8 +42,8 @@ const ProductGallery = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="gallery-slider-2"
       >
-        {images.map((img) => (
-          <SwiperSlide key={Math.random()}>
+        {images.map((img, idx) => (
+          <SwiperSlide key={`thumb-${idx}`}>
             <img src={img} />
           </SwiperSlide>
         ))}
