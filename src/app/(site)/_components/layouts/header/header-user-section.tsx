@@ -48,7 +48,7 @@ const HeaderUserSection: React.FC<IHeaderUserProps> = ({ isLogin }) => {
             >
               <IconBasket width={20} height={20} />
             </Link>
-            <LogoutButton />
+            {/* <LogoutButton /> */}
           </div>
         </>
       ) : (

@@ -1,6 +1,6 @@
-import { IconStar } from "@/app/_components/icons/icons";
 import { Price } from "@/app/_components/ui/price";
 // Removed unused CourseSummary type; define explicit props for this card
+import { Rating } from "@/app/_components/ui/rating";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -31,23 +31,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             alt={name}
             width={300}
             height={200}
-            className="w-full h-[200px] object-cover mx-auto"
+            className="w-full h-[200px] object-contain mx-auto"
           />
         </figure>
-        {/* <div className="mt-2 flex gap-2 font-semibold dark:text-info px-3 py-2">
-        <Badge variant="info">recordStatus</Badge>
-        <Badge variant="accent">level</Badge>
-      </div> */}
         <div className="card-body">
           <p className="card-title">{name}</p>
           <p>({weight}گرمی)</p>
-
-          <div className="flex items-center justify-center gap-0.5 text-warning">
-            <IconStar fill="currentColor" />
-            <IconStar fill="currentColor" />
-            <IconStar fill="currentColor" />
-            <IconStar fill="currentColor" />
-          </div>
+          <Rating
+            rate={Number(score ?? 0)}
+            size="tiny"
+            className="justify-center"
+          />
           <div className="card-footer">
             <Price price={price} />
           </div>

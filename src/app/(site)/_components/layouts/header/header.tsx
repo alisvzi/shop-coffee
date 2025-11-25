@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import HeaderUserSection from "./header-user-section";
 import { TopNavigation } from "./top-navigation";
+import { MobileNavigation } from "./mobile-navigation";
 
 interface IHeaderProps {
   isLogin: boolean;
@@ -62,8 +63,11 @@ export const Header: React.FC<IHeaderProps> = ({ isLogin }) => {
             alt="کلاسبن"
           />
           <TopNavigation />
-          <div className="mr-auto">
+          <div className="mr-auto hidden md:block">
             <HeaderUserSection isLogin={isLogin} />
+          </div>
+          <div className="mr-auto md:hidden">
+            <MobileNavigation isLogin={isLogin} />
           </div>
         </div>
       </div>

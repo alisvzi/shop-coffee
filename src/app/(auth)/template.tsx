@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AuthTemplate({
   children,
 }: {
@@ -8,12 +10,14 @@ export default function AuthTemplate({
       <section className="flex-1 p-8 md:p-10 flex flex-col">{children}</section>
       <section className="flex-1 p-8 md:p-10">
         <div className="bg-primary rounded-lg shadow-lg text-white flex flex-col items-center justify-around text-center p-6">
-          <h5 className="text-xl">قهوه ست؛ خرید قهوه تخصصی</h5>
+          <h5 className="text-xl">قهوه ست؛ خرید تخصصی قهوه</h5>
           <div className="bg-primary/50 p-2 rounded-full w-64 h-64 my-6 flex justify-center items-center">
-            <img
-              src="/images/coffee-svg-2.svg"
+            <Image
+              src="/images/logoC.png"
               alt="قهوه ست"
-              className="w-56 h-56 object-contain"
+              width={180}
+              height={36}
+              className="rounded-full"
             />
           </div>
           <div>

@@ -67,6 +67,7 @@ export const RadioRating: React.FC<ControlledRatingProps> = ({
               width={sizeClasses[size]}
               height={sizeClasses[size]}
               color={getStarColor(index)}
+              fill={getStarColor(index)}
             />
           </label>
         </Fragment>

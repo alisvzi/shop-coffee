@@ -1,38 +1,39 @@
 /* Re-export project icons using lucide-react to replace legacy SVGs */
-import React from 'react';
 import {
   ArrowLeft,
   ArrowRight,
-  ShoppingCart,
+  ArrowUp,
+  Banknote,
+  BarChart3,
   Calendar,
   Check,
   ChevronDown,
   ChevronUp,
+  CircleAlert,
+  CircleDot,
   Clock,
-  X,
-  MessageSquare,
-  FileText,
   Dot,
   Download,
-  GraduationCap,
-  CircleAlert,
   Eye,
-  Maximize,
-  Info,
-  BarChart3,
-  LogOut,
-  Play,
+  FileText,
+  GraduationCap,
+  Heart,
   HelpCircle,
-  CircleDot,
+  Info,
+  List,
+  LogOut,
+  Maximize,
+  MessageSquare,
+  Play,
   RefreshCcw,
   Settings,
+  ShoppingCart,
   Star,
-  Users,
-  List,
-  Banknote,
   User,
-  Heart,
-} from 'lucide-react';
+  Users,
+  X,
+} from "lucide-react";
+import React from "react";
 
 type IconProps = React.SVGAttributes<SVGElement> & {
   size?: number;
@@ -86,6 +87,7 @@ export const IconQuiz = withIconProps(HelpCircle);
 export const IconRecord = withIconProps(CircleDot);
 export const IconRefresh = withIconProps(RefreshCcw);
 export const IconRight = withIconProps(ArrowRight);
+export const IconUp = withIconProps(ArrowUp);
 export const IconSetting = withIconProps(Settings);
 export const IconStar = withIconProps(Star);
 export const IconStudents = withIconProps(Users);

@@ -23,7 +23,12 @@ export const Rating: React.FC<RatingProps> = ({
           key={`star-${index}`}
           width={sizeClasses[size]}
           height={sizeClasses[size]}
-          color={rate >= index ? `var(--color-${variant})` : "var(--color-base-300)"}
+          color={
+            rate >= index ? `var(--color-${variant})` : "var(--color-base-300)"
+          }
+          fill={
+            rate >= index ? `var(--color-${variant})` : "var(--color-base-300)"
+          }
         />
       ))}
     </div>

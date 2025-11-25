@@ -1,11 +1,9 @@
 "use client";
-import React, {useState } from "react";
-import { AccordionProps } from "./accordion.types";
 import { IconChevronDown, IconChevronUp } from "@/app/_components/icons/icons";
+import React, { useState } from "react";
+import { AccordionProps } from "./accordion.types";
 
-export const Accordion: React.FC<AccordionProps> = ({
-  data,
-}) => {
+export const Accordion: React.FC<AccordionProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -20,9 +18,7 @@ export const Accordion: React.FC<AccordionProps> = ({
             <button
               onClick={() => toggleAccordion(index)}
               type="button"
-              className={`${
-                index === activeIndex ? "text-white" : "text-base-content"
-              }`}
+              className="text-base-content"
             >
               <span>{item.title}</span>
               {activeIndex === index ? (

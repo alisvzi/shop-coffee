@@ -54,42 +54,43 @@ const SignInForm = () => {
         className="flex flex-col gap-6 mt-16"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextInput<SignIn>
-          register={register}
-          name={"email"}
-          placeholder="نام کاربری/ایمیل"
-          rules={{
-            required: "شماره موبایل الزامی است",
-            // maxLength: {
-            //   value: 11,
-            //   message: "شماره موبایل باید 11 رقم باشد",
-            // },
-            // minLength: {
-            //   value: 11,
-            //   message: "شماره موبایل باید 11 رقم باشد",
-            // },
-          }}
-          errors={errors}
-          variant="primary"
-        />
-        <TextInput<SignIn>
-          register={register}
-          name={"password"}
-          placeholder="رمز عبور"
-          rules={{
-            required: "شماره موبایل الزامی است",
-            // maxLength: {
-            //   value: 11,
-            //   message: "شماره موبایل باید 11 رقم باشد",
-            // },
-            // minLength: {
-            //   value: 11,
-            //   message: "شماره موبایل باید 11 رقم باشد",
-            // },
-          }}
-          errors={errors}
-          variant="primary"
-        />
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="email">ایمیل</label>
+
+          <TextInput<SignIn>
+            register={register}
+            name="email"
+            id="email"
+            dir="ltr"
+            rules={{
+              required: "ایمیل الزامی است",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "فرمت ایمیل صحیح نیست",
+              },
+            }}
+            errors={errors}
+            variant="primary"
+          />
+        </div>
+        <div className="flex flex-col space-y-2">
+          <label htmlFor="password">کلمه عبور</label>
+          <TextInput<SignIn>
+            register={register}
+            name="password"
+            id="password"
+            dir="ltr"
+            rules={{
+              required: "کلمه عبور الزامی است",
+              minLength: {
+                value: 6,
+                message: "کلمه عبور باید حداقل ۶ حرف باشد",
+              },
+            }}
+            errors={errors}
+            variant="primary"
+          />
+        </div>
 
         <Button type="submit" variant="primary" isLoading={false}>
           ورود به حساب کاربری

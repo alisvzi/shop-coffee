@@ -27,7 +27,7 @@ export type BlogPostCardProps = BlogPostSummary & {};
 
 export const BlogPostCard: React.FC = () => {
   return (
-    <div className="w-[400px] relative flex flex-col rounded-lg bg-white border border-base-content/20 cursor-pointer overflow-hidden">
+    <div className="relative flex flex-col rounded-lg bg-white border border-base-content/20 cursor-pointer overflow-hidden">
       {/* {isNew && (
         <Badge
           variant="ghost"

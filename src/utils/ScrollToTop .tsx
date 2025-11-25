@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowLeft } from "@/app/_components/icons/icons";
+import { IconUp } from "@/app/_components/icons/icons";
 import { useEffect, useState } from "react";
 
 const ScrollToTop = () => {
@@ -36,7 +36,7 @@ const ScrollToTop = () => {
       }`}
       //   style={{ display: isVisible ? "block" : "none" }}
     >
-      <IconArrowLeft />
+      <IconUp />
     </button>
   );
 };

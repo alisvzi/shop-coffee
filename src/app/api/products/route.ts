@@ -1,7 +1,6 @@
 import productModel from "@/models/Product";
-import fs from "fs/promises";
+import { del, put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import connectToDB from "../../../../configs/db";
 
 export async function POST(req: NextRequest) {
@@ -38,7 +37,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate image file
     if (!(img instanceof File)) {
       return NextResponse.json(
         { message: "Uploaded data is not a file!" },
@@ -46,7 +44,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Parse tags safely
     let tags: string[];
     try {
       tags = JSON.parse(tagsRaw);
@@ -58,7 +55,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Optional: Validate price and weight are numbers
     const priceNum = Number(price);
     const weightNum = Number(weight);
     if (isNaN(priceNum) || isNaN(weightNum)) {
@@ -67,26 +63,14 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    const pathname = `products/${Date.now()}-${img.name.replace(/\s+/g, "_")}`;
+    const uploaded = await put(pathname, img, {
+      access: "public",
+      addRandomSuffix: true,
+      contentType: img.type,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
 
-    // Prepare file saving
-    const buffer = Buffer.from(await img.arrayBuffer());
-    const fileName = `${Date.now()}-${img.name.replace(/\s+/g, "_")}`;
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-
-    // Ensure upload directory exists
-    try {
-      await fs.access(uploadDir);
-    } catch {
-      await fs.mkdir(uploadDir, { recursive: true });
-    }
-
-    // Save file
-    await fs.writeFile(path.join(uploadDir, fileName), buffer);
-
-    // Use environment variable for base URL or fallback
-    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
-
-    // Create product document
     const product = await productModel.create({
       name,
       price: priceNum,
@@ -96,7 +80,7 @@ export async function POST(req: NextRequest) {
       suitableFor,
       smell,
       tags,
-      img: `${baseUrl}/uploads/${fileName}`,
+      img: uploaded.url,
     });
 
     return NextResponse.json(
@@ -104,11 +88,9 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Internal Server Error";
-    return NextResponse.json(
-      { message },
-      { status: 500 }
-    );
+    const message =
+      err instanceof Error ? err.message : "Internal Server Error";
+    return NextResponse.json({ message }, { status: 500 });
   }
 }
 
@@ -131,22 +113,20 @@ export async function PUT(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    const buffer = Buffer.from(await img.arrayBuffer());
-    const fileName = Date.now() + img.name;
-
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-
-    try {
-      await fs.access(uploadDir);
-    } catch {
-      await fs.mkdir(uploadDir, { recursive: true });
-    }
-
-    await fs.writeFile(path.join(uploadDir, fileName), buffer);
+    const pathname = `uploads/${Date.now()}-${img.name.replace(/\s+/g, "_")}`;
+    const uploaded = await put(pathname, img, {
+      access: "public",
+      addRandomSuffix: true,
+      contentType: img.type,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
 
     return Response.json(
-      { message: "File uploaded successfully!" },
+      {
+        message: "File uploaded successfully!",
+        url: uploaded.url,
+        pathname: uploaded.pathname,
+      },
       { status: 201 }
     );
   } catch (err) {
@@ -162,5 +142,46 @@ export async function GET() {
     return Response.json(product, { status: 200 });
   } catch (err) {
     return Response.json({ message: err }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    await connectToDB();
+    const body = await req.json();
+    const { id } = body as { id?: string };
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "Product id is required" },
+        { status: 400 }
+      );
+    }
+
+    const product = await productModel.findById(id);
+    if (!product) {
+      return NextResponse.json(
+        { message: "Product not found" },
+        { status: 404 }
+      );
+    }
+
+    const imgUrl = typeof product.img === "string" ? product.img : undefined;
+    if (imgUrl && imgUrl.includes("vercel-storage.com")) {
+      try {
+        await del(imgUrl, { token: process.env.BLOB_READ_WRITE_TOKEN });
+      } catch (e) {}
+    }
+
+    await productModel.deleteOne({ _id: id });
+
+    return NextResponse.json(
+      { message: "Product deleted successfully" },
+      { status: 200 }
+    );
+  } catch (err: unknown) {
+    const message =
+      err instanceof Error ? err.message : "Internal Server Error";
+    return NextResponse.json({ message }, { status: 500 });
   }
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.85.5",
     "@tanstack/react-query-devtools": "^5.85.5",
+    "@vercel/blob": "^2.0.0",
     "axios": "^1.11.0",
     "bcryptjs": "^3.0.2",
     "colord": "^2.9.3",

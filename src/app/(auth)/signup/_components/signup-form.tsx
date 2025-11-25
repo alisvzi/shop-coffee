@@ -44,7 +44,6 @@ const SignUpForm = () => {
   return (
     <>
       <h5 className="text-2xl">ثبت نام</h5>
-      <p className="mt-2">با ثبت‌نام، به تجربه خرید قهوه حرفه‌ای‌ها بپیوندید</p>
       <form
         className="flex flex-col gap-6 mt-16"
         onSubmit={handleSubmit(onSubmit)}

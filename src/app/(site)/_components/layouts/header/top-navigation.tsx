@@ -19,7 +19,7 @@ export const TopNavigation: React.FC = () => {
   // const pathname = usePathname();
 
   return (
-    <ul className="flex gap-x-4 mr-12">
+    <ul className="hidden md:flex gap-x-4 mr-12">
       {menuItems.map((item, index) => {
         // const isActive = pathname === item.href;
         return (
